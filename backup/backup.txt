@@ -1,0 +1,20 @@
+	${CPP} -g -Os -mmcu=atmega644pa -DF_CPU=16000000 blinkISP_test.cpp -o ./output/codes/blinkISP_test.elf -L./output/lib/ -I./output/include -lArduino
+	avr-objcopy -O ihex -R .eeprom ./output/codes/blinkISP_test.elf ./output/codes/blinkISP_test.hex
+	
+	VARIANT='standard' #where to get the `pins_arduino.h` file
+CPUFREQ="16000000UL"
+MCU="atmega644pa"
+
+CFLAGS="-Os -Wl,--gc-sections -ffunction-sections  -fdata-sections"
+CPPFLAGS="-Os -Wl,--gc-sections -ffunction-sections  -fdata-sections"
+ARFLAGS=""
+
+CC="avr-gcc"
+CPP="avr-g++"
+AR="avr-ar"
+OBJC ="avr-objcopy"
+
+SOURCES="src"
+OUTPUTS="output"
+OUT = "../../#{OUTPUTS}"
+CCFLAGS = "-I#{OUT}/include -I./#{SOURCES}/ -I./ -I./utility/ -I./variants/#{VARIANT} -I./#{OUTPUTS}/include -mmcu=#{MCU} -DF_CPU=#{CPUFREQ}"
